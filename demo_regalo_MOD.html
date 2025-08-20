@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>QR Emozionale™ – Demo Regalo · Enoteca</title>
+<style>
+:root{--bg:#0b0b0d;--card:#141418;--muted:#9aa0a6;--text:#f5f6f7;--accent:#4fd1c5;--border:#22222a}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:17px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.container{max-width:1000px;margin:0 auto;padding:22px}
+header{padding:22px 0}
+.badge{display:inline-flex;gap:8px;border:1px solid var(--border);border-radius:999px;padding:6px 12px;color:var(--muted);font-size:14px}
+.hero{display:grid;gap:12px;align-items:center;padding:18px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg, rgba(124,58,237,.14), rgba(79,209,197,.08));}
+h1{color:#fff;font-weight:800;font-size:clamp(26px,5vw,40px);line-height:1.1;margin:6px 0 0}
+h2{color:#fff;font-weight:700;font-size:clamp(20px,3.2vw,28px);margin:0 0 10px}
+p,strong,li{color:#f1f2f4}
+.mute{color:#d4d7de}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin:16px 0}
+.grid{display:grid;gap:14px}
+@media(min-width:800px){.grid.cols-2{grid-template-columns:repeat(2,1fr)}.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+.media{width:100%;aspect-ratio:16/9;background:#0f0f13;border:1px solid #2a2a33;border-radius:12px;overflow:hidden}
+.kv{width:100%;aspect-ratio:3/1;background:linear-gradient(90deg,#1b1b21,#0f0f13);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+audio{width:100%}
+.small{font-size:14px;color:#cbd5e1}
+footer{padding:24px 0;color:#8b90a0;border-top:1px solid var(--border);margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;border:1px solid var(--border);background:#1b1b21;cursor:pointer}
+.btn.primary{background:var(--accent);color:#0b0b0d;font-weight:700}
+.notice{font-size:13px;color:#9aa0a6;margin-top:6px}
+.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.gallery img{aspect-ratio:16/9;border-radius:10px;border:1px solid #2a2a33}
+hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
+
+/* --- Lightbox for gift images --- */
+#gift-lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9);z-index:9999;padding:16px}
+#gift-lightbox.open{display:flex}
+#gift-lightbox img{max-width:95vw;max-height:90vh;width:auto;height:auto;margin:auto;display:block;object-fit:contain;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#gift-lightbox .close{position:absolute;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:999px;background:rgba(255,255,255,.12);cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(6px)}
+#gift-lightbox .close:focus{outline:2px solid #fff}
+#gift-lightbox .close svg{width:22px;height:22px;fill:#fff}
+.gift-thumb{cursor:zoom-in;touch-action:manipulation}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<span class="badge">QR Emozionale™ · Demo Regalo</span>
+<div class="hero">
+<div>
+<h1>Regalo · Enoteca</h1>
+<p class="mute">Formato <strong>identico</strong> a Evento: saluto/preview a sinistra, contenuti a destra, <strong>musica</strong> e <strong>galleria</strong> sotto. Tutto aggiornabile in tempo reale.</p>
+</div>
+</div>
+</header>
+<section class="grid cols-2">
+<!-- Colonna sinistra (media + musica) -->
+<div class="card">
+<h2>Saluto / Anteprima</h2>
+<div class="media">
+<video autoplay="" id="video" loop="" muted="" playsinline="" style="width:100%;height:100%"><source src="enoteca.mp4" type="video/mp4"/>Il tuo browser non supporta il video.</video>
+</div>
+<hr class="sep"/>
+<h2>Musica di sottofondo</h2>
+<audio aria-label="Musica di sottofondo (lounge)" controls="" id="bgm" loop="" preload="metadata">
+<source src="lounge-jazz-elevator-music-372734.mp3" type="audio/mpeg"/>
+      Il tuo browser non supporta l'audio.
+    </audio>
+<div class="notice">La musica parte al primo tocco. Si mette in pausa durante la riproduzione del video.</div>
+<div class="card" style="padding:14px;margin-top:10px"> <h3 style="margin:0 0 8px 0;font-size:16px">Degustazioni · Orari · Omaggi</h3> <div class="small" style="display:grid;grid-template-columns:1fr;gap:10px"> <div><strong>Degustazioni:</strong> Vini locali il <strong>venerdì</strong> 18:00–20:00 · Birre artigianali il <strong>sabato</strong> 17:00–19:00.</div> <div><strong>Orari sintetici:</strong> Lun–Gio 10–22 · Ven–Sab 10–24 · Dom 11–20.</div> <div><strong>Omaggi:</strong> mini bottiglia o calice in omaggio per ordini sopra <strong>50€</strong>.</div> <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"> <a class="btn primary" href="https://api.whatsapp.com/send?phone=393717771328&amp;text=Ciao!%20Vorrei%20prenotare%20una%20degustazione%20in%20enoteca." rel="noopener" target="_blank">Prenota su WhatsApp</a> <a class="btn" href="index.html">Scopri altre demo</a> </div> <div class="small" data-deadline="2025-08-15T12:00:00" id="promo-box"> <strong>Promo tempo reale:</strong> <span id="promo-countdown">--:--:--</span> alla fine della promozione <strong>-15%</strong> su confezioni regalo miste.        </div> </div> </div>
+</div>
+<!-- Colonna destra (contenuti) -->
+<div class="card">
+<h2>Degustazioni &amp; Omaggi</h2>
+<ul class="small">
+<li>• Degustazioni vini locali: ogni venerdì 18:00–20:00</li>
+<li>• Aperitivi con birre artigianali: sabato 17:00–19:00</li>
+<li>• Omaggio bottiglia piccola per ordini sopra 50€</li>
+</ul>
+<hr class="sep"/>
+<h2>Confezione regalo</h2>
+<div class="kv"><img alt="Confezione regalo" src="vino1.jpg"/></div>
+<p class="small mute" style="margin-top:8px">Personalizzabile con <strong>Etichetta Emozionale™</strong>: dedica, stile e musica a scelta.</p>
+<hr class="sep"/>
+<h2>Offerta a scadenza</h2>
+<div class="card" style="padding:14px">
+<p class="small"><strong>-15%</strong> su confezioni regalo miste fino al <strong id="scadenza">15 Agosto 2025</strong>. Mostra questo QR al banco.</p>
+</div>
+</div>
+</section>
+<section class="card">
+<h2>Galleria confezioni</h2>
+<div class="gallery">
+<img alt="confezione 1" class="gift-thumb" data-full="vino1.jpg" src="vino1.jpg"/>
+<img alt="confezione 2" class="gift-thumb" data-full="vino2.jpg" src="vino2.jpg"/>
+<img alt="confezione 3" class="gift-thumb" data-full="vino3.jpg" src="vino3.jpg"/>
+<img alt="confezione 4" class="gift-thumb" data-full="vino4.jpg" src="vino4.jpg"/>
+<img alt="confezione 5" class="gift-thumb" data-full="vino5.jpg" src="vino5.jpg"/>
+</div>
+<p class="small mute" style="margin-top:8px">Usa vino1.jpg … vino5.jpg nella stessa cartella.</p>
+</section>
+<footer>
+<div class="small">© 2025 QR Emozionale™ – Demo Regalo</div>
+<div style="margin-top:10px">
+<a class="btn primary" href="https://api.whatsapp.com/send?phone=393717771328&amp;text=Ciao!%20Voglio%20attivare%20un%20QR%20Regalo%20come%20questa%20demo." rel="noopener" target="_blank">Parliamo su WhatsApp</a>
+<a class="btn" href="index.html">Torna alla Home</a>
+</div>
+</footer>
+</div>
+<script>
+// avvio audio al primo tocco o quando parte il video
+const audio = document.getElementById('bgm');
+const videoEl = document.getElementById('video');
+function startAudio(){ if(audio) audio.play().catch(()=>{}); }
+document.addEventListener('click', startAudio, { once:true });
+if (videoEl){ videoEl.addEventListener('play', startAudio); }
+
+// pausa audio durante il video
+if (videoEl && audio){
+  videoEl.addEventListener('play', ()=>{ if(!audio.paused) audio.pause(); });
+  videoEl.addEventListener('pause', ()=>{ audio.play().catch(()=>{}); });
+  videoEl.addEventListener('ended', ()=>{ audio.play().catch(()=>{}); });
+}
+</script>
+<script>
+function updatePromoCountdown(){
+  const box = document.getElementById('promo-box');
+  const out = document.getElementById('promo-countdown');
+  if(!box||!out) return;
+  const iso = box.getAttribute('data-deadline');
+  const target = new Date(iso);
+  function pad(n){return String(n).padStart(2,'0');}
+  function tick(){
+    const now = new Date();
+    let diff = Math.floor((target - now)/1000);
+    if(diff<=0){ out.textContent = 'scaduta'; return; }
+    const d = Math.floor(diff/86400); diff%=86400;
+    const h = Math.floor(diff/3600); diff%=3600;
+    const m = Math.floor(diff/60); const s = diff%60;
+    out.textContent = (d>0? d+'d ' : '') + pad(h)+':'+pad(m)+':'+pad(s);
+  }
+  tick(); setInterval(tick,1000);
+}
+document.addEventListener('DOMContentLoaded', updatePromoCountdown);
+</script>
+<div aria-label="Anteprima regalo" aria-modal="true" id="gift-lightbox" role="dialog"><button aria-label="Chiudi" class="close"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 1 0 5.7 7.11L10.59 12l-4.9 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.9a1 1 0 0 0 1.41-1.41L13.41 12l4.9-4.89a1 1 0 0 0-.01-1.4Z"></path></svg></button><img alt="" id="gift-lightbox-img"/></div>
+<script>
+(function(){
+  const lb = document.getElementById('gift-lightbox');
+  const lbImg = document.getElementById('gift-lightbox-img');
+  if (!lb || !lbImg) return;
+  const closeBtn = lb.querySelector('.close');
+  let lastFocused = null;
+  function openLB(src, alt){
+    lastFocused = document.activeElement;
+    lbImg.src = src; lbImg.alt = alt || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeBtn && closeBtn.focus && closeBtn.focus();
+  }
+  function closeLB(){
+    lb.classList.remove('open');
+    lbImg.removeAttribute('src');
+    document.body.style.overflow = '';
+    lastFocused && lastFocused.focus && lastFocused.focus();
+  }
+  document.addEventListener('click', (e)=>{
+    const t = e.target.closest('.gift-thumb');
+    if (t){
+      const full = t.getAttribute('data-full') || t.src;
+      openLB(full, t.alt || '');
+    } else if (e.target === lb){
+      closeLB();
+    }
+  });
+  closeBtn && closeBtn.addEventListener('click', closeLB);
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && lb.classList.contains('open')) closeLB();
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

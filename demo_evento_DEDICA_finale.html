@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QR Emozionale™ – Demo Evento · Matrimonio</title>
+<style>
+:root{--bg:#0b0b0d;--card:#141418;--muted:#9aa0a6;--text:#f5f6f7;--accent:#4fd1c5;--border:#22222a}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:17px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+.container{max-width:1000px;margin:0 auto;padding:22px}
+header{padding:22px 0}
+.badge{display:inline-flex;gap:8px;border:1px solid var(--border);border-radius:999px;padding:6px 12px;color:var(--muted);font-size:14px}
+.hero{display:grid;gap:12px;align-items:center;padding:18px;border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg, rgba(124,58,237,.14), rgba(79,209,197,.08));}
+h1{color:#fff;font-weight:800;font-size:clamp(26px,5vw,40px);line-height:1.1;margin:6px 0 0}
+h2{color:#fff;font-weight:700;font-size:clamp(20px,3.2vw,28px);margin:0 0 10px}
+p,strong,li{color:#f1f2f4}
+.mute{color:#d4d7de}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin:16px 0}
+.grid{display:grid;gap:14px}
+@media(min-width:800px){.grid.cols-2{grid-template-columns:repeat(2,1fr)}.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+.media{width:100%;aspect-ratio:16/9;background:#0f0f13;border:1px solid #2a2a33;border-radius:12px;overflow:hidden}
+.kv{width:100%;aspect-ratio:3/1;background:linear-gradient(90deg,#1b1b21,#0f0f13);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+audio{width:100%}
+.small{font-size:14px;color:#cbd5e1}
+footer{padding:24px 0;color:#8b90a0;border-top:1px solid var(--border);margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;border:1px solid var(--border);background:#1b1b21;cursor:pointer}
+.btn.primary{background:var(--accent);color:#0b0b0d;font-weight:700}
+.notice{font-size:13px;color:#9aa0a6;margin-top:6px}
+.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.gallery img{aspect-ratio:16/9;border-radius:10px;border:1px solid #2a2a33}
+hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <span class="badge">QR Emozionale™ · Demo Evento</span>
+  <div class="hero">
+    <div>
+      <h1>Matrimonio Demo</h1>
+      <p class="mute">Benvenuti. Qui trovi il saluto, il programma, la galleria e uno <strong>spazio personalizzabile</strong>. Tutto aggiornabile in tempo reale.</p>
+    </div>
+  </div>
+</header>
+
+<section class="grid cols-2">
+  <!-- Colonna sinistra -->
+  <div class="card">
+    <h2>Saluto di benvenuto</h2>
+    <div class="media">
+      <video id="video" controls playsinline muted poster="1.jpg" style="width:100%;height:100%">
+        <source src="537-137078188_medium.mp4" type="video/mp4">
+        Il tuo browser non supporta il video.
+      </video>
+    </div>
+    <div class="notice">Consigliato: 10–20 secondi (verticale). Un volto e poche parole bastano.</div>
+
+    <hr class="sep">
+    <h2>Dedica</h2>
+    <div class="card" style="padding:14px">
+      <p class="mute" style="margin:0 0 6px"><em>Esempio di messaggio (personalizzabile in ogni parte):</em></p>
+      <p style="margin:0;font-weight:600;color:#f5f6f7">
+        “Ciao, saremmo felici di averti qui con noi il giorno 20 Agosto 2025. Prepara il sorriso, porta con te la voglia di festeggiare: sarà un giorno indimenticabile.”
+      </p>
+      <ul class="small" style="margin-top:8px">
+        <li>• Testo breve, immagini singole o galleria.</li>
+        <li>• Possiamo aggiungere un audio con la vostra voce o un breve video-dedica.</li>
+        <li>• Tutto aggiornabile anche dopo la stampa dell’etichetta.</li>
+      </ul>
+    </div>
+
+    <hr class="sep">
+    <h2>Musica di sottofondo</h2>
+    <audio id="bgm" controls preload="metadata" loop aria-label="Musica di sottofondo">
+      <source src="romantic-wedding-background-music-382686.mp3" type="audio/mpeg">
+      Il tuo browser non supporta l'audio.
+    </audio>
+    <div class="notice">La musica parte al primo tocco. Si mette in pausa durante il video.</div>
+  </div>
+
+  <!-- Colonna destra -->
+  <div class="card">
+    <h2>Programma</h2>
+    <ul class="small">
+      <li>• 16:30 – Cerimonia</li>
+      <li>• 18:00 – Aperitivo</li>
+      <li>• 20:00 – Cena</li>
+      <li>• 23:00 – Brindisi e balli</li>
+    </ul>
+
+    <hr class="sep">
+    <h2>Spazio personalizzabile</h2>
+    <div class="kv"><img src="vigna-rossa.png" alt="Spazio personalizzabile: Vigna Rossa"></div>
+    <p class="small mute" style="margin-top:8px">
+      Qui può apparire un <strong>omaggio</strong> (es. Vigna Rossa, con descrizione essenziale),
+      una <strong>storia</strong> (foto/video di come vi siete conosciuti),
+      oppure <strong>informazioni utili</strong> (mappa, parcheggi, link).
+      Decidete voi e si aggiorna quando volete.
+    </p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Foto e momenti</h2>
+  <div class="gallery">
+    <img src="1.jpg" alt="mano nella mano">
+    <img src="2.jpg" alt="anelli">
+    <img src="3.jpg" alt="momento 1">
+    <img src="4.jpg" alt="momento 2">
+    <img src="5.jpg" alt="momento 3">
+  </div>
+  <p class="small mute" style="margin-top:8px">Per la demo usiamo foto generiche (niente abiti del matrimonio prima del giorno!).</p>
+</section>
+
+<footer>
+  <div class="small">© 2025 QR Emozionale™ – Demo Evento</div>
+  <div style="margin-top:10px">
+    <a class="btn primary" href="https://api.whatsapp.com/send?phone=393717771328&text=Ciao!%20Voglio%20attivare%20un%20QR%20Evento%20come%20la%20demo%20Matrimonio." target="_blank" rel="noopener">Attiva il tuo QR Evento</a>
+  </div>
+</footer>
+</div>
+
+<script>
+// avvio audio al primo tocco o quando parte il video
+const audio = document.getElementById('bgm');
+const videoEl = document.getElementById('video');
+function startAudio(){ if(audio) audio.play().catch(()=>{}); }
+document.addEventListener('click', startAudio, { once:true });
+if (videoEl){ videoEl.addEventListener('play', startAudio); }
+
+// niente sovrapposizione: pausa audio durante il video
+if (videoEl && audio){
+  videoEl.addEventListener('play', ()=>{ if(!audio.paused) audio.pause(); });
+  videoEl.addEventListener('pause', ()=>{ audio.play().catch(()=>{}); });
+  videoEl.addEventListener('ended', ()=>{ audio.play().catch(()=>{}); });
+}
+</script>
+
+<div style="margin-top:20px; text-align:center;">
+  <a href="index.html" style="display:inline-block; padding:10px 20px; background:#333; color:#fff; text-decoration:none; border-radius:5px;">
+    ← Torna alla Home
+  </a>
+</div>
+
+</body>
+</html>
