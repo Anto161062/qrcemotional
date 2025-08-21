@@ -33,17 +33,30 @@ footer{padding:24px 0;color:#8b90a0;border-top:1px solid var(--border);margin-to
 .gallery img{aspect-ratio:16/9;border-radius:10px;border:1px solid #2a2a33}
 hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
 
-/* --- Start overlay for audio --- */
-#start-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(5,11,26,.92);z-index:10000;backdrop-filter:blur(6px)}
-#start-overlay .hint{position:absolute;bottom:20px;opacity:.75}
+/* --- Lightbox (tap-to-zoom images) --- */
+#gift-lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9);z-index:9999;padding:16px}
+#gift-lightbox.open{display:flex}
+#gift-lightbox img{max-width:95vw;max-height:90vh;width:auto;height:auto;margin:auto;display:block;object-fit:contain;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#gift-lightbox .close{position:absolute;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:999px;background:rgba(255,255,255,.12);cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(6px)}
+#gift-lightbox .close:focus{outline:2px solid #fff}
+#gift-lightbox .close svg{width:22px;height:22px;fill:#fff}
+.gift-thumb{cursor:zoom-in;touch-action:manipulation}
+
+/* --- Overlay start button (round, electric blue) --- */
+#start-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(5,11,26,.75);z-index:10000;backdrop-filter:blur(4px)}
+#start-overlay .round-btn{
+  width: 104px; height: 104px; border-radius: 9999px;
+  border: 1px solid rgba(96,165,250,.65);
+  background: radial-gradient(80px 80px at 35% 25%, rgba(255,255,255,.18), transparent 40%),
+              linear-gradient(180deg,#1e3a8a,#0f255f);
+  box-shadow: inset 0 2px 6px rgba(255,255,255,.12), 0 10px 26px rgba(0,0,0,.45);
+  color: #eaf2ff; font-size: 16px; font-weight: 700; letter-spacing: .3px;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+}
+#start-overlay .round-btn:focus{outline:2px solid #93c5fd; outline-offset:3px}
 </style>
 </head>
-<body>
-<div aria-label="Attiva audio" aria-modal="true" id="start-overlay" role="dialog">
-<button class="btn primary" id="start-btn" style="font-size:18px;padding:16px 22px">Entra con musica</button>
-<div class="small hint">Tocca per attivare l'audio</div>
-</div>
-
+<body><div aria-label="Attiva audio" aria-modal="true" id="start-overlay" role="dialog"><button class="round-btn" id="start-btn">Entra</button></div>
 <div class="container">
 <header>
 <span class="badge">QR Emozionale™ · Demo Regalo</span>
@@ -92,11 +105,11 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
 <section class="card">
 <h2>Galleria confezioni</h2>
 <div class="gallery">
-<img alt="confezione 1" src="vino1.jpg"/>
-<img alt="confezione 2" src="vino2.jpg"/>
-<img alt="confezione 3" src="vino3.jpg"/>
-<img alt="confezione 4" src="vino4.jpg"/>
-<img alt="confezione 5" src="vino5.jpg"/>
+<img alt="confezione 1" class="gift-thumb" data-full="vino1.jpg" src="vino1.jpg"/>
+<img alt="confezione 2" class="gift-thumb" data-full="vino2.jpg" src="vino2.jpg"/>
+<img alt="confezione 3" class="gift-thumb" data-full="vino3.jpg" src="vino3.jpg"/>
+<img alt="confezione 4" class="gift-thumb" data-full="vino4.jpg" src="vino4.jpg"/>
+<img alt="confezione 5" class="gift-thumb" data-full="vino5.jpg" src="vino5.jpg"/>
 </div>
 <p class="small mute" style="margin-top:8px">Usa vino1.jpg … vino5.jpg nella stessa cartella.</p>
 </section>
@@ -130,6 +143,42 @@ function updatePromoCountdown(){
 }
 document.addEventListener('DOMContentLoaded', updatePromoCountdown);
 </script>
+<div aria-label="Anteprima immagine" aria-modal="true" id="gift-lightbox" role="dialog"><button aria-label="Chiudi" class="close"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 1 0 5.7 7.11L10.59 12l-4.9 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.9a1 1 0 0 0 1.41-1.41L13.41 12l4.9-4.89a1 1 0 0 0-.01-1.4Z"></path></svg></button><img alt="" id="gift-lightbox-img"/></div>
+<script>
+(function(){
+  const lb = document.getElementById('gift-lightbox');
+  const lbImg = document.getElementById('gift-lightbox-img');
+  if (!lb || !lbImg) return;
+  const closeBtn = lb.querySelector('.close');
+  let lastFocused = null;
+  function openLB(src, alt){
+    lastFocused = document.activeElement;
+    lbImg.src = src; lbImg.alt = alt || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (closeBtn && closeBtn.focus) closeBtn.focus();
+  }
+  function closeLB(){
+    lb.classList.remove('open');
+    lbImg.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  document.addEventListener('click', (e)=>{
+    const t = e.target.closest('.gift-thumb');
+    if (t){
+      const full = t.getAttribute('data-full') || t.src;
+      openLB(full, t.alt || '');
+    } else if (e.target === lb){
+      closeLB();
+    }
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeLB);
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && lb.classList.contains('open')) closeLB();
+  }, {passive:true});
+})();
+</script>
 
 <script>
 (function(){
@@ -141,35 +190,24 @@ document.addEventListener('DOMContentLoaded', updatePromoCountdown);
   function pauseAudio(){ if(audio){ try{ audio.pause(); }catch(e){} } }
   function broadcastPause(){ try{ localStorage.setItem('QR_AUDIO', JSON.stringify({type:'PAUSE', ts: Date.now()})); }catch(e){} }
 
-  // Start button: play audio and hide overlay
   if (btn && audio){
     btn.addEventListener('click', async ()=>{
-      broadcastPause(); // stop audio in altre pagine aperte
-      try { await audio.play(); } catch(e){ /* ignored */ }
+      broadcastPause(); // stop su altre pagine aperte
+      try { await audio.play(); } catch(e){}
       if (overlay) overlay.style.display = 'none';
     });
   } else if (overlay) {
-    // Se non c'è audio, nascondi overlay
     overlay.style.display = 'none';
   }
 
-  // Pause quando un'altra pagina chiede lo stop
-  window.addEventListener('storage', (e)=>{
-    if (e.key === 'QR_AUDIO'){ pauseAudio(); }
-  });
-
-  // Pause su cambio pagina/tab
+  window.addEventListener('storage', (e)=>{ if (e.key === 'QR_AUDIO'){ pauseAudio(); } });
   document.addEventListener('visibilitychange', ()=>{ if (document.hidden) pauseAudio(); });
   window.addEventListener('pagehide', pauseAudio);
   window.addEventListener('beforeunload', pauseAudio);
-
-  // Pause quando si naviga via link (anche target _blank)
   document.addEventListener('click', (e)=>{
     const a = e.target.closest('a[href]');
     if (a){ broadcastPause(); pauseAudio(); }
   }, {capture:true});
-
-  // Pause quando parte un video
   if (video){ video.addEventListener('play', ()=>{ pauseAudio(); }); }
 })();
 </script>

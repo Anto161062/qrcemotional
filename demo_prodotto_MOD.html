@@ -42,17 +42,21 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
 #gift-lightbox .close svg{width:22px;height:22px;fill:#fff}
 .gift-thumb{cursor:zoom-in;touch-action:manipulation}
 
-/* --- Start overlay for audio --- */
-#start-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(5,11,26,.92);z-index:10000;backdrop-filter:blur(6px)}
-#start-overlay .hint{position:absolute;bottom:20px;opacity:.75}
+/* --- Overlay start button (round, electric blue) --- */
+#start-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(5,11,26,.75);z-index:10000;backdrop-filter:blur(4px)}
+#start-overlay .round-btn{
+  width: 104px; height: 104px; border-radius: 9999px;
+  border: 1px solid rgba(96,165,250,.65);
+  background: radial-gradient(80px 80px at 35% 25%, rgba(255,255,255,.18), transparent 40%),
+              linear-gradient(180deg,#1e3a8a,#0f255f);
+  box-shadow: inset 0 2px 6px rgba(255,255,255,.12), 0 10px 26px rgba(0,0,0,.45);
+  color: #eaf2ff; font-size: 16px; font-weight: 700; letter-spacing: .3px;
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+}
+#start-overlay .round-btn:focus{outline:2px solid #93c5fd; outline-offset:3px}
 </style>
 </head>
-<body>
-<div aria-label="Attiva audio" aria-modal="true" id="start-overlay" role="dialog">
-<button class="btn primary" id="start-btn" style="font-size:18px;padding:16px 22px">Entra con musica</button>
-<div class="small hint">Tocca per attivare l'audio</div>
-</div>
-
+<body><div aria-label="Attiva audio" aria-modal="true" id="start-overlay" role="dialog"><button class="round-btn" id="start-btn">Entra</button></div>
 <div class="container">
 <header>
 <span class="badge">QR Emozionale™ · Demo Prodotto</span>
@@ -133,6 +137,7 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
 </div>
 </footer>
 </div>
+
 <script>
 function updateMiniCountdown(){
   const slot = document.getElementById('slot-extra');
@@ -192,35 +197,6 @@ document.addEventListener('DOMContentLoaded', updateMiniCountdown);
   }, {passive:true});
 })();
 </script>
-<script>
-(function(){
-  const audio = document.getElementById('bgm');
-  const video = document.getElementById('video');
-  if (!audio) return;
-
-  // NON avviare automaticamente: l'utente usa i controlli dell'audio.
-  // Pausa automatica quando si cambia pagina / scheda o si naviga via link.
-  const pauseAudio = ()=>{ try{ audio.pause(); }catch(e){} };
-
-  document.addEventListener('visibilitychange', ()=>{
-    if (document.hidden) pauseAudio();
-  });
-
-  window.addEventListener('pagehide', pauseAudio);
-  window.addEventListener('beforeunload', pauseAudio);
-
-  // Pausa audio quando parte il video (se presente)
-  if (video){
-    video.addEventListener('play', pauseAudio);
-  }
-
-  // Pausa audio quando si cliccano link (anche target _blank)
-  document.addEventListener('click', (e)=>{
-    const a = e.target.closest('a[href]');
-    if (a) pauseAudio();
-  }, {capture:true});
-})();
-</script>
 
 <script>
 (function(){
@@ -232,35 +208,24 @@ document.addEventListener('DOMContentLoaded', updateMiniCountdown);
   function pauseAudio(){ if(audio){ try{ audio.pause(); }catch(e){} } }
   function broadcastPause(){ try{ localStorage.setItem('QR_AUDIO', JSON.stringify({type:'PAUSE', ts: Date.now()})); }catch(e){} }
 
-  // Start button: play audio and hide overlay
   if (btn && audio){
     btn.addEventListener('click', async ()=>{
-      broadcastPause(); // stop audio in altre pagine aperte
-      try { await audio.play(); } catch(e){ /* ignored */ }
+      broadcastPause(); // stop su altre pagine aperte
+      try { await audio.play(); } catch(e){}
       if (overlay) overlay.style.display = 'none';
     });
   } else if (overlay) {
-    // Se non c'è audio, nascondi overlay
     overlay.style.display = 'none';
   }
 
-  // Pause quando un'altra pagina chiede lo stop
-  window.addEventListener('storage', (e)=>{
-    if (e.key === 'QR_AUDIO'){ pauseAudio(); }
-  });
-
-  // Pause su cambio pagina/tab
+  window.addEventListener('storage', (e)=>{ if (e.key === 'QR_AUDIO'){ pauseAudio(); } });
   document.addEventListener('visibilitychange', ()=>{ if (document.hidden) pauseAudio(); });
   window.addEventListener('pagehide', pauseAudio);
   window.addEventListener('beforeunload', pauseAudio);
-
-  // Pause quando si naviga via link (anche target _blank)
   document.addEventListener('click', (e)=>{
     const a = e.target.closest('a[href]');
     if (a){ broadcastPause(); pauseAudio(); }
   }, {capture:true});
-
-  // Pause quando parte un video
   if (video){ video.addEventListener('play', ()=>{ pauseAudio(); }); }
 })();
 </script>
