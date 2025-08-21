@@ -1,7 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="it">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>QR Emozionale™ – Demo Evento · Matrimonio</title>
 <style>
 :root{--bg:#0b0b0d;--card:#141418;--muted:#9aa0a6;--text:#f5f6f7;--accent:#4fd1c5;--border:#22222a}
@@ -31,118 +32,169 @@ footer{padding:24px 0;color:#8b90a0;border-top:1px solid var(--border);margin-to
 .gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 .gallery img{aspect-ratio:16/9;border-radius:10px;border:1px solid #2a2a33}
 hr.sep{border:none;border-top:1px solid var(--border);margin:10px 0}
+
+/* --- Lightbox (tap-to-zoom images) --- */
+#gift-lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.9);z-index:9999;padding:16px}
+#gift-lightbox.open{display:flex}
+#gift-lightbox img{max-width:95vw;max-height:90vh;width:auto;height:auto;margin:auto;display:block;object-fit:contain;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+#gift-lightbox .close{position:absolute;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:999px;background:rgba(255,255,255,.12);cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(6px)}
+#gift-lightbox .close:focus{outline:2px solid #fff}
+#gift-lightbox .close svg{width:22px;height:22px;fill:#fff}
+.gift-thumb{cursor:zoom-in;touch-action:manipulation}
 </style>
 </head>
 <body>
 <div class="container">
 <header>
-  <span class="badge">QR Emozionale™ · Demo Evento</span>
-  <div class="hero">
-    <div>
-      <h1>Matrimonio Demo</h1>
-      <p class="mute">Benvenuti. Qui trovi il saluto, il programma, la galleria e uno <strong>spazio personalizzabile</strong>. Tutto aggiornabile in tempo reale.</p>
-    </div>
-  </div>
+<span class="badge">QR Emozionale™ · Demo Evento</span>
+<div class="hero">
+<div>
+<h1>Matrimonio Demo</h1>
+<p class="mute">Benvenuti. Qui trovi il saluto, il programma, la galleria e uno <strong>spazio personalizzabile</strong>. Tutto aggiornabile in tempo reale.</p>
+</div>
+</div>
 </header>
-
 <section class="grid cols-2">
-  <!-- Colonna sinistra -->
-  <div class="card">
-    <h2>Saluto di benvenuto</h2>
-    <div class="media">
-      <video id="video" controls playsinline muted poster="1.jpg" style="width:100%;height:100%">
-        <source src="537-137078188_medium.mp4" type="video/mp4">
+<!-- Colonna sinistra -->
+<div class="card">
+<h2>Saluto di benvenuto</h2>
+<div class="media">
+<video controls="" id="video" muted="" playsinline="" poster="1.jpg" style="width:100%;height:100%">
+<source src="537-137078188_medium.mp4" type="video/mp4"/>
         Il tuo browser non supporta il video.
       </video>
-    </div>
-    <div class="notice">Consigliato: 10–20 secondi (verticale). Un volto e poche parole bastano.</div>
-
-    <hr class="sep">
-    <h2>Dedica</h2>
-    <div class="card" style="padding:14px">
-      <p class="mute" style="margin:0 0 6px"><em>Esempio di messaggio (personalizzabile in ogni parte):</em></p>
-      <p style="margin:0;font-weight:600;color:#f5f6f7">
+</div>
+<div class="notice">Consigliato: 10–20 secondi (verticale). Un volto e poche parole bastano.</div>
+<hr class="sep"/>
+<h2>Dedica</h2>
+<div class="card" style="padding:14px">
+<p class="mute" style="margin:0 0 6px"><em>Esempio di messaggio (personalizzabile in ogni parte):</em></p>
+<p style="margin:0;font-weight:600;color:#f5f6f7">
         “Ciao, saremmo felici di averti qui con noi il giorno 20 Agosto 2025. Prepara il sorriso, porta con te la voglia di festeggiare: sarà un giorno indimenticabile.”
       </p>
-      <ul class="small" style="margin-top:8px">
-        <li>• Testo breve, immagini singole o galleria.</li>
-        <li>• Possiamo aggiungere un audio con la vostra voce o un breve video-dedica.</li>
-        <li>• Tutto aggiornabile anche dopo la stampa dell’etichetta.</li>
-      </ul>
-    </div>
-
-    <hr class="sep">
-    <h2>Musica di sottofondo</h2>
-    <audio id="bgm" controls preload="metadata" loop aria-label="Musica di sottofondo">
-      <source src="romantic-wedding-background-music-382686.mp3" type="audio/mpeg">
+<ul class="small" style="margin-top:8px">
+<li>• Testo breve, immagini singole o galleria.</li>
+<li>• Possiamo aggiungere un audio con la vostra voce o un breve video-dedica.</li>
+<li>• Tutto aggiornabile anche dopo la stampa dell’etichetta.</li>
+</ul>
+</div>
+<hr class="sep"/>
+<h2>Musica di sottofondo</h2>
+<audio aria-label="Musica di sottofondo" controls="" id="bgm" loop="" preload="metadata">
+<source src="romantic-wedding-background-music-382686.mp3" type="audio/mpeg"/>
       Il tuo browser non supporta l'audio.
     </audio>
-    <div class="notice">La musica parte al primo tocco. Si mette in pausa durante il video.</div>
-  </div>
-
-  <!-- Colonna destra -->
-  <div class="card">
-    <h2>Programma</h2>
-    <ul class="small">
-      <li>• 16:30 – Cerimonia</li>
-      <li>• 18:00 – Aperitivo</li>
-      <li>• 20:00 – Cena</li>
-      <li>• 23:00 – Brindisi e balli</li>
-    </ul>
-
-    <hr class="sep">
-    <h2>Spazio personalizzabile</h2>
-    <div class="kv"><img src="vigna-rossa.png" alt="Spazio personalizzabile: Vigna Rossa"></div>
-    <p class="small mute" style="margin-top:8px">
+<div class="notice">La musica parte al primo tocco. Si mette in pausa durante il video.</div>
+</div>
+<!-- Colonna destra -->
+<div class="card">
+<h2>Programma</h2>
+<ul class="small">
+<li>• 16:30 – Cerimonia</li>
+<li>• 18:00 – Aperitivo</li>
+<li>• 20:00 – Cena</li>
+<li>• 23:00 – Brindisi e balli</li>
+</ul>
+<hr class="sep"/>
+<h2>Spazio personalizzabile</h2>
+<div class="kv"><img alt="Spazio personalizzabile: Vigna Rossa" src="vigna-rossa.png"/></div>
+<p class="small mute" style="margin-top:8px">
       Qui può apparire un <strong>omaggio</strong> (es. Vigna Rossa, con descrizione essenziale),
       una <strong>storia</strong> (foto/video di come vi siete conosciuti),
       oppure <strong>informazioni utili</strong> (mappa, parcheggi, link).
       Decidete voi e si aggiorna quando volete.
     </p>
-  </div>
+</div>
 </section>
-
 <section class="card">
-  <h2>Foto e momenti</h2>
-  <div class="gallery">
-    <img src="1.jpg" alt="mano nella mano">
-    <img src="2.jpg" alt="anelli">
-    <img src="3.jpg" alt="momento 1">
-    <img src="4.jpg" alt="momento 2">
-    <img src="5.jpg" alt="momento 3">
-  </div>
-  <p class="small mute" style="margin-top:8px">Per la demo usiamo foto generiche (niente abiti del matrimonio prima del giorno!).</p>
+<h2>Foto e momenti</h2>
+<div class="gallery">
+<img alt="mano nella mano" class="gift-thumb" data-full="1.jpg" src="1.jpg"/>
+<img alt="anelli" class="gift-thumb" data-full="2.jpg" src="2.jpg"/>
+<img alt="momento 1" class="gift-thumb" data-full="3.jpg" src="3.jpg"/>
+<img alt="momento 2" class="gift-thumb" data-full="4.jpg" src="4.jpg"/>
+<img alt="momento 3" class="gift-thumb" data-full="5.jpg" src="5.jpg"/>
+</div>
+<p class="small mute" style="margin-top:8px">Per la demo usiamo foto generiche (niente abiti del matrimonio prima del giorno!).</p>
 </section>
-
 <footer>
-  <div class="small">© 2025 QR Emozionale™ – Demo Evento</div>
-  <div style="margin-top:10px">
-    <a class="btn primary" href="https://api.whatsapp.com/send?phone=393717771328&text=Ciao!%20Voglio%20attivare%20un%20QR%20Evento%20come%20la%20demo%20Matrimonio." target="_blank" rel="noopener">Attiva il tuo QR Evento</a>
-  </div>
+<div class="small">© 2025 QR Emozionale™ – Demo Evento</div>
+<div style="margin-top:10px">
+<a class="btn primary" href="https://api.whatsapp.com/send?phone=393717771328&amp;text=Ciao!%20Voglio%20attivare%20un%20QR%20Evento%20come%20la%20demo%20Matrimonio." rel="noopener" target="_blank">Attiva il tuo QR Evento</a>
+</div>
 </footer>
 </div>
 
-<script>
-// avvio audio al primo tocco o quando parte il video
-const audio = document.getElementById('bgm');
-const videoEl = document.getElementById('video');
-function startAudio(){ if(audio) audio.play().catch(()=>{}); }
-document.addEventListener('click', startAudio, { once:true });
-if (videoEl){ videoEl.addEventListener('play', startAudio); }
-
-// niente sovrapposizione: pausa audio durante il video
-if (videoEl && audio){
-  videoEl.addEventListener('play', ()=>{ if(!audio.paused) audio.pause(); });
-  videoEl.addEventListener('pause', ()=>{ audio.play().catch(()=>{}); });
-  videoEl.addEventListener('ended', ()=>{ audio.play().catch(()=>{}); });
-}
-</script>
-
 <div style="margin-top:20px; text-align:center;">
-  <a href="index.html" style="display:inline-block; padding:10px 20px; background:#333; color:#fff; text-decoration:none; border-radius:5px;">
+<a href="index.html" style="display:inline-block; padding:10px 20px; background:#333; color:#fff; text-decoration:none; border-radius:5px;">
     ← Torna alla Home
   </a>
 </div>
+<div aria-label="Anteprima immagine" aria-modal="true" id="gift-lightbox" role="dialog"><button aria-label="Chiudi" class="close"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 1 0 5.7 7.11L10.59 12l-4.9 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.9a1 1 0 0 0 1.41-1.41L13.41 12l4.9-4.89a1 1 0 0 0-.01-1.4Z"></path></svg></button><img alt="" id="gift-lightbox-img"/></div>
+<script>
+(function(){
+  const lb = document.getElementById('gift-lightbox');
+  const lbImg = document.getElementById('gift-lightbox-img');
+  if (!lb || !lbImg) return;
+  const closeBtn = lb.querySelector('.close');
+  let lastFocused = null;
+  function openLB(src, alt){
+    lastFocused = document.activeElement;
+    lbImg.src = src; lbImg.alt = alt || '';
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (closeBtn && closeBtn.focus) closeBtn.focus();
+  }
+  function closeLB(){
+    lb.classList.remove('open');
+    lbImg.removeAttribute('src');
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  document.addEventListener('click', (e)=>{
+    const t = e.target.closest('.gift-thumb');
+    if (t){
+      const full = t.getAttribute('data-full') || t.src;
+      openLB(full, t.alt || '');
+    } else if (e.target === lb){
+      closeLB();
+    }
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeLB);
+  document.addEventListener('keydown', (e)=>{
+    if (e.key === 'Escape' && lb.classList.contains('open')) closeLB();
+  }, {passive:true});
+})();
+</script>
 
+<script>
+(function(){
+  const audio = document.getElementById('bgm');
+  const video = document.getElementById('video');
+  if (!audio) return;
+
+  // NON avviare automaticamente: l'utente usa i controlli dell'audio.
+  // Pausa automatica quando si cambia pagina / scheda o si naviga via link.
+  const pauseAudio = ()=>{ try{ audio.pause(); }catch(e){} };
+
+  document.addEventListener('visibilitychange', ()=>{
+    if (document.hidden) pauseAudio();
+  });
+
+  window.addEventListener('pagehide', pauseAudio);
+  window.addEventListener('beforeunload', pauseAudio);
+
+  // Pausa audio quando parte il video (se presente)
+  if (video){
+    video.addEventListener('play', pauseAudio);
+  }
+
+  // Pausa audio quando si cliccano link (anche target _blank)
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[href]');
+    if (a) pauseAudio();
+  }, {capture:true});
+})();
+</script>
 </body>
 </html>
